@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Uñas - Sparkle Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f9f9f9; --card-bg-color: #ffffff; --text-color: #333333; --heading-color: #d63384; --subtle-text-color: #666666; --border-color: #eeeeee; --shadow-color: rgba(0, 0, 0, 0.1); --primary-accent: #d63384; --primary-accent-hover: #b32a6c; --secondary-accent: #5a5a5a; --secondary-accent-hover: #444444; --font-fancy: 'Dancing Script', cursive; --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body.dark-mode {
+            --bg-color: #121212; --card-bg-color: #1e1e1e; --text-color: #e0e0e0; --heading-color: #e96fbd; --subtle-text-color: #a0a0a0; --border-color: #2c2c2c; --shadow-color: rgba(0, 0, 0, 0.25); --primary-accent: #e96fbd; --primary-accent-hover: #d63384; --secondary-accent: #888888; --secondary-accent-hover: #aaaaaa;
+        }
+        body { font-family: var(--font-main); margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.3s ease, color 0.3s ease; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px 0; }
+        h1, h2, h3 { text-align: center; color: var(--heading-color); }
+        .header { background-color: var(--card-bg-color); padding: 20px 5%; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; gap: 15px; transition: background-color 0.3s ease; }
+        #logo { height: 80px; width: 80px; border-radius: 50%; border: 3px solid var(--heading-color); box-shadow: 0 4px 8px var(--shadow-color); object-fit: cover; object-position: top; }
+        .header-title { text-align: center; }
+        .header-title h1 { font-family: var(--font-fancy); font-size: 3.2em; margin: 0; line-height: 1; }
+        .header-title p { margin: 5px 0 0; color: var(--subtle-text-color); font-size: 1.1em; }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .theme-switcher { display: flex; align-items: center; gap: 10px; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-accent); }
+        input:checked + .slider:before { transform: translateX(24px); }
+        .services-section { text-align: center; margin-top: 40px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; text-align: left; }
+        .service-card { background-color: var(--card-bg-color); border-radius: 10px; padding: 20px; box-shadow: 0 2px 5px var(--shadow-color); transition: all 0.3s ease; display: flex; flex-direction: column; }
+        .service-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px var(--shadow-color); }
+        .service-card h4 { margin: 0 0 5px 0; color: var(--text-color); font-size: 1.1em; flex-grow: 1; }
+        .service-card p { margin: 0 0 15px 0; color: var(--subtle-text-color); font-size: 1em; font-weight: bold; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 40px; }
+        .nail-design { background-color: var(--card-bg-color); border-radius: 10px; box-shadow: 0 4px 8px var(--shadow-color); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; position: relative; padding: 10px; border: 2px solid var(--heading-color); }
+        .nail-design:hover { transform: translateY(-5px); box-shadow: 0 8px 16px var(--shadow-color); border-color: transparent; }
+        .image-container { position: relative; cursor: pointer; overflow: hidden; border-radius: 6px; }
+        .nail-design img { display: block; width: 100%; height: 300px; object-fit: cover; transition: transform 0.3s ease; }
+        .nail-design:hover img { transform: scale(1.05); }
+        .nail-info { padding: 15px 5px 5px 5px; text-align: center; }
+        .nail-info h3 { margin: 0; color: var(--text-color); font-size: 1.1em; font-weight: 600; }
+        .card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; gap: 15px; opacity: 0; transition: opacity 0.3s ease; border-radius: 6px; }
+        .nail-design:hover .card-overlay { opacity: 1; }
+        .button { background-color: var(--primary-accent); color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; text-align: center; text-decoration: none; font-size: 1em; font-weight: bold; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .button:hover { background-color: var(--primary-accent-hover); transform: scale(1.05); }
+        .button.secondary { background-color: var(--secondary-accent); }
+        .button.secondary:hover { background-color: var(--secondary-accent-hover); }
+        .button.danger { background-color: #dc3545; }
+        .button.danger:hover { background-color: #c82333; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; }
+        .modal-content { background-color: var(--card-bg-color); margin: auto; padding: 30px; border: 1px solid var(--border-color); width: 90%; max-width: 500px; border-radius: 10px; position: relative; animation: fadeIn 0.5s; }
+        .modal-content.modal-lg { max-width: 800px; }
+        .modal-content.modal-detail img { width: 100%; border-radius: 8px; margin-bottom: 20px; }
+        .modal-close { color: #aaa; position: absolute; top: 15px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: var(--text-color); }
+        @keyframes fadeIn { from {opacity: 0; transform: scale(0.9);} to {opacity: 1; transform: scale(1);} }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--subtle-text-color); }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 1em; box-sizing: border-box; background-color: var(--bg-color); color: var(--text-color); }
+        .admin-section { margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--border-color); }
+        .admin-table-container { overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .admin-table th, .admin-table td { padding: 12px; border: 1px solid var(--border-color); text-align: left; }
+        .admin-table th { background-color: var(--bg-color); }
+        .admin-table img { width: 80px; height: 60px; object-fit: cover; border-radius: 5px; }
+        .footer { background-color: #333; color: #fff; text-align: center; padding: 20px 0; margin-top: 50px; }
+        .footer a { color: var(--heading-color); text-decoration: none; cursor: pointer; }
+        .footer a:hover { text-decoration: underline; }
+        .social-links { margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 20px; }
+        .social-links a img { height: 32px; width: auto; transition: transform 0.2s ease; }
+        .social-links a:hover img { transform: scale(1.15); }
+        @media (max-width: 768px) { .header-title h1 { font-size: 2.8em; } .services-grid {grid-template-columns: 1fr;} }
+    </style>
+</head>
+<body>
+
+    <header class="header"> <img id="logo" src="..." alt="Sparkle Studio Logo"> <div class="header-title"> <h1>Sparkle Studio</h1> <p>Tu Espacio de Belleza y Estilo</p> </div> <div class="header-actions"> <div class="theme-switcher"> <span style="font-size: 24px;">☀️</span> <label class="switch"> <input type="checkbox" id="theme-toggle"> <span class="slider"></span> </label> <span style="font-size: 24px;">🌙</span> </div> <button class="button" onclick="openAppointmentModal()">¡Agenda tu Cita!</button> </div> </header>
+    
+    <div class="container">
+        <div class="services-section">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid" id="services-grid-container"></div>
+        </div>
+        <h2 id="diseños-galeria" style="margin-top: 60px;">Galería de Diseños</h2>
+        <div class="gallery" id="gallery-container"></div>
+    </div>
+    
+    <footer class="footer"> <p>&copy; 2025 Sparkle Studio - Todos los derechos reservados.</p> <div class="social-links"> <!-- ... Iconos de redes sociales ... --> </div> <p style="margin-top: 20px;"><a onclick="login()">Admin</a></p> </footer>
+    <div id="modal-detalle" class="modal"><div class="modal-content modal-detail" id="modal-detalle-content"></div></div>
+    <div id="modal-agendar" class="modal"><div class="modal-content"> <span class="modal-close" onclick="cerrarModal('modal-agendar')">&times;</span> <h2 id="appointment-modal-title">Agenda tu Cita</h2> <form id="appointmentForm" class="appointment-form"> <fieldset><legend>Paso 1: Elige fecha y hora</legend><div class="form-group"><label for="date">Fecha deseada:</label><input type="date" id="date" name="date" required></div><div class="form-group"><label for="time">Hora disponible:</label><select id="time" name="time" required><option value="">-- Selecciona una hora --</option><option value="09:00 AM">09:00 AM</option><option value="10:30 AM">10:30 AM</option><option value="12:00 PM">12:00 PM</option><option value="02:00 PM">02:00 PM</option><option value="03:30 PM">03:30 PM</option><option value="05:00 PM">05:00 PM</option></select></div></fieldset> <fieldset><legend>Paso 2: Tus datos</legend><div class="form-group"><label for="name">Tu Nombre Completo:</label><input type="text" id="name" name="name" placeholder="Ej: Maria Rodriguez" required></div><div class="form-group"><label for="phone">Tu Número de WhatsApp:</label><input type="tel" id="phone" name="phone" placeholder="Ej: 3001234567" required></div></fieldset> <fieldset><legend>Paso 3: Servicio de interés y comentarios</legend><div class="form-group"><label for="comments">Comentarios (opcional):</label><textarea id="comments" name="comments" placeholder="Ej: Quiero un diseño personalizado, tengo una imagen de referencia, necesito retiro, etc."></textarea></div></fieldset> <button type="submit" class="button" style="width: 100%; font-size: 1.2em; padding: 15px;">Solicitar Cita por WhatsApp</button> </form> </div></div>
+    <div id="modal-admin" class="modal"><div class="modal-content modal-lg"> <span class="modal-close" onclick="cerrarModal('modal-admin')">&times;</span> <div class="admin-section"><h2>Gestionar Logo</h2> <div class="form-group"><label for="logo-url-input">URL del Logo</label><input type="text" id="logo-url-input" placeholder="Pega aquí el enlace de tu logo"></div><button class="button" onclick="saveLogo()">Guardar Logo</button></div> <div class="admin-section"><h2>Gestionar Servicios Rápidos</h2> <button class="button" onclick="openAddEditModal('service')">+ Agregar Servicio</button> <div class="admin-table-container"> <table class="admin-table"> <thead> <tr> <th>Nombre</th> <th>Precio</th> <th>Acciones</th> </tr> </thead> <tbody id="admin-services-table-body"></tbody> </table> </div> </div> <div class="admin-section"><h2>Gestionar Galería de Diseños</h2> <button class="button" onclick="openAddEditModal('gallery')">+ Agregar Diseño</button> <div class="admin-table-container"> <table class="admin-table"> <thead> <tr> <th>Imagen</th> <th>Nombre</th> <th>Acciones</th> </tr> </thead> <tbody id="admin-gallery-table-body"></tbody> </table> </div> </div> </div></div>
+    <div id="modal-add-edit" class="modal"><div class="modal-content"> <span class="modal-close" onclick="cerrarModal('modal-add-edit')">&times;</span> <h2 id="add-edit-title"></h2> <form id="add-edit-form"> <input type="hidden" id="edit-id"> <input type="hidden" id="edit-type"> <div class="form-group"> <label for="item-name">Nombre</label> <input type="text" id="item-name" required> </div> <div class="form-group" id="price-group"> <label for="item-price">Precio</label> <input type="number" id="item-price" placeholder="Ej: 40000"> </div> <div class="form-group" id="desc-group"> <label for="item-desc">Descripción</label> <textarea id="item-desc" rows="3"></textarea> </div> <div class="form-group" id="image-group"> <label for="item-image">URL de Imagen</label> <input type="text" id="item-image" placeholder="Ej: mi-foto.jpg"> </div> <button type="submit" class="button">Guardar Cambios</button> </form> </div></div>
+    
+    <script>
+        const initialServices = [
+            { id: 1, name: "Manos Semi", price: 40000 }, { id: 2, name: "Pies Semi", price: 40000 }, { id: 3, name: "Manos y Pies Semi", price: 80000 }, { id: 4, name: "Manos Semi y Pies Tradicionales", price: 60000 }, { id: 5, name: "Pies Tradicionales", price: 20000 }, { id: 6, name: "Manos Semi Hombre", price: 20000 }, { id: 7, name: "Manos y Pies Semi Hombre", price: 36000 }, { id: 8, name: "Retoque de Press On", price: 65000 }, { id: 9, name: "Cada uña rota", price: 7000 }, { id: 10, name: "Excede más de dos uñas decoradas", price: 5000 }, { id: 11, name: "Press On", price: 75000 }, { id: 12, name: "Press On y Pies Semi", price: 115000 }
+        ];
+        const initialGallery = [
+            { id: 101, name: "Manicure Coquette", description: "Un diseño romántico y femenino con lazos 3D, pedrería y un delicado glitter rosado.", imageUrl: "diseno-coquette.jpg" },
+            { id: 102, name: "Estilo Francés Moderno", description: "Una reinvención del clásico manicure francés con punta azul vibrante y lazos 3D.", imageUrl: "estilo-frances.jpg" },
+            { id: 103, name: "Francés con Brillo de Galaxia", description: "La elegancia del french clásico se une al brillo del glitter encapsulado.", imageUrl: "diseno-frances-galaxia.jpg" },
+            { id: 104, name: "Francés con Ondas y Corazones", description: "Un toque tierno en el diseño francés con líneas fluidas y pequeños corazones.", imageUrl: "diseno-frances-ondas.jpg" },
+            { id: 105, name: "Princesa Rosada", description: "Combina la delicadeza del french, la dulzura de los lazos y el brillo del glitter rosado.", imageUrl: "diseno-princesa-rosada.jpg" },
+            { id: 106, name: "Francés Deluxe con Oro", description: "Un estilo francés clásico elevado con un toque de lujo y pedrería en la cutícula.", imageUrl: "diseno-frances-oro.jpg" }
+        ];
+
+        let services = [];
+        let galleryItems = [];
+
+        document.addEventListener('DOMContentLoaded', () => { loadData(); renderAll(); setupThemeSwitcher(); setupAppointmentForm(); });
+        function saveData() {
+            localStorage.setItem('sparkleStudioServices', JSON.stringify(services));
+            localStorage.setItem('sparkleStudioGallery', JSON.stringify(galleryItems));
+        }
+        function loadData() {
+            services = JSON.parse(localStorage.getItem('sparkleStudioServices')) || initialServices;
+            galleryItems = JSON.parse(localStorage.getItem('sparkleStudioGallery')) || initialGallery;
+            const savedLogo = localStorage.getItem('sparkleStudioLogo');
+            if (savedLogo) { document.getElementById('logo').src = savedLogo; }
+        }
+        function renderAll() { renderServicesGrid(); renderGallery(); }
+        function formatPrice(p) { return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(p); }
+
+        function renderServicesGrid() {
+            const grid = document.getElementById('services-grid-container');
+            grid.innerHTML = '';
+            services.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.innerHTML = `<h4>${s.name}</h4><p>${formatPrice(s.price)}</p><button class="button" onclick="openAppointmentModal('${s.name}')">Agendar</button>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderGallery() {
+            const gallery = document.getElementById('gallery-container');
+            gallery.innerHTML = '';
+            galleryItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'nail-design';
+                card.innerHTML = `<div class="image-container" onclick="openDetailModal(${item.id})"><img src="${item.imageUrl}" alt="${item.name}" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300.png?text=Imagen+no+encontrada';"><div class="card-overlay"><button class="button secondary" onclick="event.stopPropagation(); openDetailModal(${item.id})">Ver Detalles</button><button class="button" onclick="event.stopPropagation(); openAppointmentModal('${item.name}')">Agendar</button></div></div><div class="nail-info"><h3>${item.name}</h3></div>`;
+                gallery.appendChild(card);
+            });
+        }
+        
+        function renderAdminTables(){
+            const servicesBody = document.getElementById("admin-services-table-body");
+            servicesBody.innerHTML = "";
+            services.forEach(s => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${s.name}</td><td>${formatPrice(s.price)}</td><td><button class="button secondary" onclick="openAddEditModal('service', ${s.id})">Editar</button><button class="button danger" onclick="deleteItem('service', ${s.id})">Eliminar</button></td>`;
+                servicesBody.appendChild(row);
+            });
+            const galleryBody = document.getElementById("admin-gallery-table-body");
+            galleryBody.innerHTML = "";
+            galleryItems.forEach(g => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td><img src="${g.imageUrl}" alt="${g.name}"></td><td>${g.name}</td><td><button class="button secondary" onclick="openAddEditModal('gallery', ${g.id})">Editar</button><button class="button danger" onclick="deleteItem('gallery', ${g.id})">Eliminar</button></td>`;
+                galleryBody.appendChild(row);
+            });
+        }
+
+        function abrirModal(e){document.getElementById(e).style.display="flex"}
+        function cerrarModal(e){document.getElementById(e).style.display="none"}
+        window.onclick=function(e){if(e.target.classList.contains("modal")){e.target.style.display="none"}}
+        
+        function openDetailModal(e){const t=galleryItems.find(item=>item.id===e);const n=document.getElementById("modal-detalle-content");n.innerHTML=`<span class="modal-close" onclick="cerrarModal('modal-detalle')">&times;</span><img src="${t.imageUrl}" alt="${t.name}"><h3 style="margin-top:10px">${t.name}</h3><p>${t.description}</p><div class="buttons" style="justify-content: flex-end;"><button class="button" onclick="cerrarModal('modal-detalle');openAppointmentModal('${t.name}');">Agendar Cita</button></div>`;abrirModal("modal-detalle")}
+        
+        function openAppointmentModal(itemName = '') {
+            const modalTitle = document.getElementById('appointment-modal-title');
+            const commentsField = document.getElementById('comments');
+            if (itemName) {
+                modalTitle.textContent = `Agenda: ${itemName}`;
+                commentsField.value = `Estoy interesada en el servicio/diseño: ${itemName}.`;
+            } else {
+                modalTitle.textContent = 'Agenda tu Cita';
+                commentsField.value = '';
+            }
+            abrirModal('modal-agendar');
+        }
+
+        function setupThemeSwitcher(){const e=document.getElementById("theme-toggle"),t=localStorage.getItem("theme");"dark"===t&&(document.body.classList.add("dark-mode"),e.checked=!0),e.addEventListener("change",()=>{document.body.classList.toggle("dark-mode"),localStorage.setItem("theme",e.checked?"dark":"light")})}
+        function login(){const e=prompt("Por favor, ingresa la contraseña:");"1234"===e?(document.getElementById("logo-url-input").value=localStorage.getItem("sparkleStudioLogo")||"",renderAdminTables(),abrirModal("modal-admin")):e&&alert("Contraseña incorrecta.")}
+        function saveLogo(){const e=document.getElementById("logo-url-input").value;localStorage.setItem("sparkleStudioLogo",e),document.getElementById("logo").src=e,alert("Logo guardado.")}
+
+        function openAddEditModal(type, id = null){
+            const form = document.getElementById("add-edit-form");
+            form.reset();
+            document.getElementById("edit-id").value = id || "";
+            document.getElementById("edit-type").value = type;
+            document.getElementById("price-group").style.display = type === 'service' ? 'block' : 'none';
+            document.getElementById("desc-group").style.display = type === 'gallery' ? 'block' : 'none';
+            document.getElementById("image-group").style.display = type === 'gallery' ? 'block' : 'none';
+            
+            const title = document.getElementById("add-edit-title");
+            if(id){
+                title.textContent = "Editar " + (type === 'service' ? 'Servicio' : 'Diseño');
+                const item = type === 'service' ? services.find(s=>s.id===id) : galleryItems.find(g=>g.id===id);
+                document.getElementById("item-name").value = item.name;
+                if(type==='service') document.getElementById("item-price").value = item.price;
+                if(type==='gallery'){
+                    document.getElementById("item-desc").value = item.description;
+                    document.getElementById("item-image").value = item.imageUrl;
+                }
+            } else {
+                title.textContent = "Agregar " + (type === 'service' ? 'Servicio' : 'Diseño');
+            }
+            abrirModal("modal-add-edit");
+        }
+
+        document.getElementById("add-edit-form").addEventListener("submit", e => {
+            e.preventDefault();
+            const id = document.getElementById("edit-id").value;
+            const type = document.getElementById("edit-type").value;
+            if(type === 'service'){
+                const updatedService = { name: document.getElementById("item-name").value, price: parseInt(document.getElementById("item-price").value) };
+                if (id) { const index = services.findIndex(s => s.id == id); services[index] = { ...services[index], ...updatedService }; } 
+                else { updatedService.id = Date.now(); services.push(updatedService); }
+            } else {
+                const updatedGalleryItem = { name: document.getElementById("item-name").value, description: document.getElementById("item-desc").value, imageUrl: document.getElementById("item-image").value };
+                if (id) { const index = galleryItems.findIndex(g => g.id == id); galleryItems[index] = { ...galleryItems[index], ...updatedGalleryItem }; }
+                else { updatedGalleryItem.id = Date.now(); galleryItems.push(updatedGalleryItem); }
+            }
+            saveData(); cerrarModal("modal-add-edit"); renderAll(); renderAdminTables();
+        });
+
+        function deleteItem(type, id){if(confirm("¿Segura que quieres eliminar esto?")){if(type==='service'){services=services.filter(s=>s.id!==id)}else{galleryItems=galleryItems.filter(g=>g.id!==id)}saveData();renderAll();renderAdminTables()}}
+        
+        function setupAppointmentForm(){const e=document.getElementById("date");e.setAttribute("min",(new Date).toISOString().split("T")[0]);const t=document.getElementById("appointmentForm");t.addEventListener("submit",function(e){e.preventDefault();const n=document.getElementById("date").value,o=document.getElementById("time").value,d=document.getElementById("name").value,i=document.getElementById("phone").value,c=document.getElementById("comments").value,a=new Date(n+"T00:00:00").toLocaleString("es-ES",{weekday:"long",year:"numeric",month:"long",day:"numeric"});let l=`¡Hola Sparkle Studio! ✨\n\nQuisiera solicitar una cita:\n\n👤 *Nombre:* ${d}\n📱 *Teléfono:* ${i}\n\n🗓️ *Fecha:* ${a}\n⏰ *Hora:* ${o}\n\n`;c&&(l+=`📝 *Servicio/Comentarios:*\n${c}\n\n`),l+="¡Quedo a la espera de tu confirmación! Gracias.";const s=`https://wa.me/573164915308?text=${encodeURIComponent(l)}`;window.open(s,"_blank"),cerrarModal("modal-agendar")})}
+    </script>
+</body>
+</html>
